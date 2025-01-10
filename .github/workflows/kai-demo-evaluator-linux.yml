@@ -1,6 +1,7 @@
 name: (Linux) Run demo with kai client and evaluate results
 
 on:
+  push:
   schedule:
     - cron: '0 0 * * 0,1,2,3,4,5'
   workflow_dispatch:
@@ -8,6 +9,9 @@ jobs:
   test-and-evaluate:
     name: Run demo and evaluation
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
