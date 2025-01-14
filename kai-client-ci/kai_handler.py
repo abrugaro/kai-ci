@@ -1,6 +1,5 @@
 import os
 import platform
-import runpy
 import shutil
 import subprocess
 from pathlib import Path
@@ -86,7 +85,7 @@ def setup_kai_dependencies() -> None:
     #venv_folder = os.path.join(KAI_FOLDER, "venv")
     venv_folder = os.path.join("venv")
     logger.debug("Creating virtual environment for running demo")
-    #subprocess.run(["python", "-m", "venv", venv_folder], check=True)
+    subprocess.run(["python", "-m", "venv", venv_folder], check=True)
 
     if is_windows():
         pip_executable = os.path.join(venv_folder, "Scripts", "pip")
@@ -104,8 +103,6 @@ def run_demo() -> None:
 
     logger.info("Executing run_demo.py")
     logger.debug(f"Running {python_rel_path} run_demo.py from {cwd}")
-
-    """"
     result = subprocess.run(
         [python_rel_path, "run_demo.py"],
         cwd=cwd,
@@ -114,25 +111,12 @@ def run_demo() -> None:
         shell=is_windows(),
         env=os.environ
     )
-    """
 
-
-    original_cwd = os.getcwd()
-    try:
-        os.chdir(cwd)
-        result = runpy.run_path("run_demo.py", run_name="__main__")
-        logger.info("Execution completed successfully.")
-    except Exception as e:
-        logger.error(f"Error executing run_demo.py: {e}")
-    finally:
-        os.chdir(original_cwd)
-
-
-    #if result.returncode == 0:
-    #        logger.info(f"run_demo.py script executed successfully:\n{result.stdout}")
-    #else:
-        #        logger.error(f"run_demo.py failed with return code {result.returncode}: \n{result.stderr}")
-        #raise Exception(f"run_demo.py failed")
+    if result.returncode == 0:
+        logger.info(f"run_demo.py script executed successfully:\n{result.stdout}")
+    else:
+        logger.error(f"run_demo.py failed with return code {result.returncode}: \n{result.stderr}")
+        raise Exception(f"run_demo.py failed")
 
     if os.path.exists(f"{KAI_FOLDER}/logs/kai-analyzer-server.log"):
         logger.debug("Analyzer logs")
