@@ -86,7 +86,7 @@ def setup_kai_dependencies() -> None:
     #venv_folder = os.path.join(KAI_FOLDER, "venv")
     venv_folder = os.path.join("venv")
     logger.debug("Creating virtual environment for running demo")
-    subprocess.run(["python", "-m", "venv", venv_folder], check=True)
+    #subprocess.run(["python", "-m", "venv", venv_folder], check=True)
 
     if is_windows():
         pip_executable = os.path.join(venv_folder, "Scripts", "pip")

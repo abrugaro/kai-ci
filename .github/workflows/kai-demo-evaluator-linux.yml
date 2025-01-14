@@ -35,6 +35,7 @@ jobs:
       - name: Set up dependencies
         run: |
           cd kai-client-ci
+          . .venv/bin/activate
           pip install -r requirements.txt
         env:
           PATH: ${{ env.PATH }}
@@ -43,6 +44,7 @@ jobs:
         run: |
           python --version
           cd kai-client-ci
+          . .venv/bin/activate
           python ./main.py
         env:
           PATH: ${{ env.PATH }}
