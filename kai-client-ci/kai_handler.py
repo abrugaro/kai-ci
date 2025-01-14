@@ -82,7 +82,8 @@ def setup_kai_external_files():
 
 
 def setup_kai_dependencies() -> None:
-    venv_folder = os.path.join(KAI_FOLDER, "venv")
+    #venv_folder = os.path.join(KAI_FOLDER, "venv")
+    venv_folder = os.path.join("venv")
     logger.debug("Creating virtual environment for running demo")
     subprocess.run(["python", "-m", "venv", venv_folder], check=True)
 
@@ -97,14 +98,13 @@ def setup_kai_dependencies() -> None:
 
 
 def run_demo() -> None:
-    python_venv_executable = get_python_venv_executable()
-    demo_rel_path = Path(f"../../../{python_venv_executable}")
+    python_rel_path = Path(f"../../../{get_python_venv_executable()}")
     cwd = os.path.join(KAI_FOLDER, "example")
 
     logger.info("Executing run_demo.py")
-    logger.debug(f"Running {demo_rel_path} run_demo.py from {cwd}")
+    logger.debug(f"Running {python_rel_path} run_demo.py from {cwd}")
     result = subprocess.run(
-        [demo_rel_path, "run_demo.py"],
+        [python_rel_path, "run_demo.py"],
         cwd=cwd,
         capture_output=True,
         text=True,
@@ -132,7 +132,7 @@ def get_python_venv_executable() -> str:
     """
         :return: python venv executable path inside kai_files/kai
     """
-    venv_folder = os.path.join(KAI_FOLDER, "venv")
+    venv_folder = os.path.join("venv")
 
     if is_windows():
         return os.path.join(venv_folder, "Scripts", "python")
